@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import redsky.AppProperties;
 import redsky.domain.ProductDetail;
@@ -22,7 +23,7 @@ import java.util.Optional;
 import static redsky.exception.MyRetailException.ErrorCode.PRODUCT_NOT_FOUND;
 
 
-@RepositoryRestController
+@RestController
 public class ProductsController {
 
     @Autowired
