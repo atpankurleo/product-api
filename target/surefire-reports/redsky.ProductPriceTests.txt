@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: redsky.ProductPriceTests
--------------------------------------------------------------------------------
-Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.004 sec - in redsky.ProductPriceTests

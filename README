@@ -1,0 +1,4 @@
+# Use the following commands to build and run project
+./mvnw clean package
+
+java -jar target/redsky-api-0.1.0.war --server.port=8090
