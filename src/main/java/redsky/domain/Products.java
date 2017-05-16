@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonIgnoreProperties(ignoreUnknown = true, value = "current_price.id")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Products {
     @Id
     private String id;
