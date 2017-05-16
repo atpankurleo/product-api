@@ -15,7 +15,6 @@ import redsky.domain.Products;
 import redsky.exception.MyRetailException;
 import redsky.repository.ProductPriceRepository;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -38,11 +37,10 @@ public class ProductsController {
     @RequestMapping(method = RequestMethod.GET, value = "/products/{id}")
     public @ResponseBody Products getProductsById(@PathVariable String id) {
         ProductPrice productPrice = productPriceRepository.findOne(id);
-        System.out.println(appProperties.getProductRedskyUrl());
         Optional<ProductDetail> optional = Optional.ofNullable(restTemplate.getForObject(appProperties.getProductRedskyUrl(), ProductDetail.class));
         if(optional.isPresent() && optional.get().getProduct() != null) {
             Products product = new Products();
-            product.setId(id);
+            product.setId(Long.parseLong(id));
             product.setName(optional.get().getProduct().getItem().getProductDescription().getTitle());
             if(productPrice != null) {
                 productPrice.setId(null);
@@ -58,7 +56,6 @@ public class ProductsController {
     @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
     public @ResponseBody Products updateProductPrice(@PathVariable String id, @RequestBody Products products) {
         Optional<ProductPrice> optional = Optional.ofNullable(productPriceRepository.findOne(id));
-        System.out.println("If present :" + optional.isPresent());
         if(optional.isPresent()) {
             ProductPrice latestProductPrice = products.getProductPrice();
             latestProductPrice.setId(id);

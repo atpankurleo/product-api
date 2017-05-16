@@ -8,17 +8,16 @@ import org.springframework.data.annotation.Id;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Products {
-    @Id
-    private String id;
+    private Long id;
     private String name;
     @JsonProperty(value = "current_price")
     private ProductPrice productPrice;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

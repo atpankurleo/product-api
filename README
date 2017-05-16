@@ -9,4 +9,4 @@ curl -i -X POST -H "Content-Type:application/json" -d "{ \"id\" : \"13860428\", 
 
 #Updating product price using Products PUT
 
-curl -i -X PUT -H "Content-Type:application/json" -d "{ \"id\" : \"13860428\", \"name\" : \"Blu-ray\", \"current_price\" : {\"value\" : \"125.5\",\"id\" : \"13860428\",  \"currency_code\" : \"USD\" }}" http://localhost:8090/products/13860428
+curl -i -X PUT -H "Content-Type:application/json" -d "{ \"id\" : 13860428, \"name\" : \"Blu-ray\", \"current_price\" : {\"value\" : \"125.5\", \"currency_code\" : \"USD\" }}" http://localhost:8090/products/13860428
