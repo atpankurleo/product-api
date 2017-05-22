@@ -13,8 +13,8 @@ public class MyRetailException extends BadRequestException {
     MyRetailException() {
         super();
     }
-    public MyRetailException(ErrorCode errorCode, Map<String, String> errorparams) {
+    public MyRetailException(ErrorCode errorCode, Map<String, String> errorParams) {
         super(errorCode.toString());
-        this.errorParams = new HashMap<>(errorparams);
+        this.errorParams = new HashMap<>(errorParams);
     }
 }

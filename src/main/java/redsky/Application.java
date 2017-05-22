@@ -16,16 +16,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	public RestTemplate restTemplate(RestTemplateBuilder builder) {
-		return builder.build();
-	}
-
-	@Bean(name = "conversionService")
-	public ConversionService getConversionService() {
-		ConversionServiceFactoryBean bean = new ConversionServiceFactoryBean();
-		//bean.setConverters();
-		bean.afterPropertiesSet();
-		return bean.getObject();
-	}
 }

@@ -6,21 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.hateoas.ResourceSupport;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class Products extends ResourceSupport{
-    @JsonProperty(value = "id")
-    private Long pid;
+public class Products {
+    private Long id;
     private String name;
-    @JsonProperty(value = "current_price")
     private ProductPrice productPrice;
 
-    public Long getPid() {
-        return pid;
+    public Long getId() {
+        return id;
     }
 
-    public void setPid(Long id) {
-        this.pid = id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

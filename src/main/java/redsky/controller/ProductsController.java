@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import redsky.AppProperties;
+import redsky.Resource.ProductsResource;
+import redsky.ResourceAssembler.ProductsResourceAssembler;
 import redsky.domain.ProductDetail;
 import redsky.domain.ProductPrice;
 import redsky.domain.Products;
@@ -33,35 +35,36 @@ public class ProductsController {
     AppProperties appProperties;
 
     @RequestMapping(method = RequestMethod.GET, value = "/products/{id}")
-    public ResponseEntity<Products> getProductsById(@PathVariable String id) {
+    public ResponseEntity<ProductsResource> getProductsById(@PathVariable String id) {
         ProductPrice productPrice = productPriceRepository.findOne(id);
         Optional<ProductDetail> optional = Optional.ofNullable(restTemplate.getForObject(appProperties.getProductRedskyUrl(), ProductDetail.class));
         if(optional.isPresent() && optional.get().getProduct() != null) {
             Products product = new Products();
-            product.setPid(Long.parseLong(id));
+            product.setId(Long.parseLong(id));
             product.setName(optional.get().getProduct().getItem().getProductDescription().getTitle());
-            HttpHeaders headers = new HttpHeaders();
-            //headers.setLocation(URI.create(product.getLink("self").getHref()));
             if(productPrice != null) {
-                productPrice.setId(null);
                 product.setProductPrice(productPrice);
             }
-            return new ResponseEntity<>(product, headers, HttpStatus.OK);
+            ProductsResource productsResource = new ProductsResourceAssembler().toResource(product);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setLocation(URI.create(productsResource.getLink("self").getHref()));
+
+            return new ResponseEntity<>(productsResource, headers, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/products/{id}")
-    public ResponseEntity<Products> updateProductPrice(@PathVariable String id, @RequestBody Products products) {
+    public ResponseEntity<ProductsResource> updateProductPrice(@PathVariable String id, @RequestBody Products products) {
         Optional<ProductPrice> optional = Optional.ofNullable(productPriceRepository.findOne(id));
         if(optional.isPresent()) {
             ProductPrice latestProductPrice = products.getProductPrice();
             latestProductPrice.setId(id);
             ProductPrice updatedProductPrice = productPriceRepository.save(latestProductPrice);
             if(updatedProductPrice != null) {
-                ResponseEntity<Products> productsById = getProductsById(id);
+                ResponseEntity<ProductsResource> productsById = getProductsById(id);
                 HttpHeaders headers = new HttpHeaders();
-                //headers.setLocation(URI.create(productsById.getBody().getLink("self").getHref()));
+                headers.setLocation(URI.create(productsById.getBody().getLink("self").getHref()));
                 return new ResponseEntity<>(productsById.getBody(), headers, HttpStatus.OK);
             }
             /*Map<String, String> map = new HashMap<String, String>();
